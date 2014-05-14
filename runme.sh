@@ -26,6 +26,7 @@ dockerBuildAndPrepareRun cfp-redis cfp-rds redis/
 docker --debug run --name cfp-rds -d $USERNAME/cfp-redis
 
 # Building then running all-in-one docker file, with elasticsearch & redis linked to it
-git clone git@bitbucket.org:bdxio/cfp-devoxx-fr.git webapp/cfp-devoxx-fr
+git submodule init
+git submodule update
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
 docker run --name cfp-web -d --link cfp-es:es --link cfp-rds:redis -p 49000:9000 -p 49022:22 $USERNAME/cfp-webapp
