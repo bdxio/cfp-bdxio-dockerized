@@ -24,7 +24,7 @@ RUN         mv /tmp/play-2.2.0 /play2
 ENV         PATH /play2:$PATH
 
 # Application
-ADD         cfp-devoxx-fr/ /cfp-src/
+ADD         cfp-devoxxfr/ /cfp-src/
 WORKDIR     /cfp-src/
 RUN         sbt update
 RUN         play compile stage
