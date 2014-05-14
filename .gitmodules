@@ -1,0 +1,4 @@
+[submodule "webapp/cfp-devoxxfr"]
+	path = webapp/cfp-devoxxfr
+	url = git@bitbucket.org:bdxio/cfp-devoxx-fr.git
+	branch = bdxio
