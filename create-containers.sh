@@ -17,17 +17,9 @@ function dockerBuildAndPrepareRun() {
   docker build -t $USERNAME/$img_name $img_dir
 }
 
-# Building then running elastic search container
 dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
-docker --debug run --name cfp-es -d -p 9200:9200 -p 9300:9300 $USERNAME/cfp-elasticsearch
-
-# Building then running redis container
 dockerBuildAndPrepareRun cfp-redis cfp-rds redis/
-docker --debug run --name cfp-rds -d -p 6363:6363 $USERNAME/cfp-redis
 
-# Building then running all-in-one docker file, with elasticsearch & redis linked to it
 git submodule init
 git submodule update
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
-docker run -d --link cfp-es:es --link cfp-rds:redis -p 80:9000 $USERNAME/cfp-webapp
-#docker run -ti --link cfp-es:es --link cfp-rds:redis -p 80:9000 $USERNAME/cfp-webapp /bin/bash
