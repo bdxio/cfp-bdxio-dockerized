@@ -1,5 +1,6 @@
 # DOCKER-VERSION 0.10.0
 FROM        ubuntu:14.04
+VOLUME      ["/cfp-src"]
 
 # Pre-requisites
 RUN         apt-get update -y
@@ -23,17 +24,11 @@ RUN         rm -f play-2.2.0.zip
 RUN         mv /tmp/play-2.2.0 /play2
 ENV         PATH /play2:$PATH
 
-# Application
-ADD         cfp-src/ /cfp-src/
-WORKDIR     /cfp-src/
-RUN         sbt update
-RUN         play compile stage
-
 # Replacing some application.conf values with redis/elasticsearch ip/port in cfp's jar file
 # Note : This should be made during run, not during build (we don't have the variables during build)
-ADD         run.sh /cfp-src/run.sh
-RUN         chmod a+x run.sh
+ADD         run.sh /usr/bin/run-play2-webapp
+RUN         chmod a+x /usr/bin/run-play2-webapp
 
 EXPOSE      9000
 
-ENTRYPOINT  [ "./run.sh" ]
+ENTRYPOINT  [ "/usr/bin/run-play2-webapp" ]
