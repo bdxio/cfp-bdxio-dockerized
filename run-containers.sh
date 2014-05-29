@@ -13,8 +13,10 @@ function extractApplicationConfig(){
   git archive --remote=$APP_CONFIG_REPO $APP_CONFIG_REPO_BRANCH application-$1.conf | tar -x; mv application-$1.conf webapp/cfp-src/conf/application.conf
 }
 
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 docker --debug run -d -p 49200:9200 -p 49300:9300 $USERNAME/cfp-elasticsearch
-docker --debug run -d -p 49363:6363 $USERNAME/cfp-redis
+docker --debug run -d -p 49363:6363 -v $CURRENT_DIR/backups:/usr/local/var/db/redis/ $USERNAME/cfp-redis
 
 redisContainerName=$(docker ps | grep 'cfp-redis' | sed -e 's/.*[ ]\([^ ]\{1,\}\)[ ]*$/\1/g')
 esContainerName=$(docker ps | grep 'cfp-elasticsearch' | sed -e 's/.*[ ]\([^ ]\{1,\}\)[ ]*$/\1/g')

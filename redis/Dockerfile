@@ -1,5 +1,9 @@
 # DOCKER-VERSION 0.10.0
 FROM        ubuntu:14.04
+# Redis backups
+RUN         mkdir -p /usr/local/var/db/redis/
+VOLUME      ["/usr/local/var/db/redis/"]
+
 
 # Redis 2.8.4 with cfp config file
 RUN         apt-get install -y make gcc wget
@@ -21,7 +25,6 @@ WORKDIR     /tmp
 RUN         rm -Rf /tmp/redis-2.8.4*
 RUN         mkdir /var/log/redis/
 
-RUN         mkdir -p /usr/local/var/db/redis/
 ADD         ./redis-cfp.conf /etc/redis/redis-config.conf
 RUN         chown root:root /etc/redis/redis-config.conf
 RUN         /etc/init.d/redis_6379 stop
