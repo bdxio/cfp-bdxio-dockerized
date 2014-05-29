@@ -21,6 +21,8 @@ function extractApplicationConfig(){
 docker --debug run -d -p 49200:9200 -p 49300:9300 $USERNAME/cfp-elasticsearch
 docker --debug run -d -p 49363:6363 -v $CURRENT_DIR/backups:/usr/local/var/db/redis/ $USERNAME/cfp-redis
 
+# Note using the -name option on previous docker commands because a "named" container is harder to remove
+# than a randomly-named container (and we cannot reuse an already-used name)
 redisContainerName=$(docker ps | grep 'cfp-redis' | sed -e 's/.*[ ]\([^ ]\{1,\}\)[ ]*$/\1/g' | cut -d "," -f1)
 esContainerName=$(docker ps | grep 'cfp-elasticsearch' | sed -e 's/.*[ ]\([^ ]\{1,\}\)[ ]*$/\1/g' | cut -d "," -f1)
 
