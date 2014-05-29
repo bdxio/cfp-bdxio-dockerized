@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Things in this script are not in Dockerfile because they rely on "variable" sources
+# (cfp-src) which shouldn't be cached by docker
+# This will allow to update src then re-run cached container : it will work smoothly
+
+# Generating play2 executable for current cfp src
+cd /cfp-src/
+play stage
+
 # Replacing es/redis infos in cfp.jar's application.conf
 mkdir /tmp/jar
 cd /tmp/jar
