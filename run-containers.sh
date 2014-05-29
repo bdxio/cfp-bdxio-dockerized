@@ -1,9 +1,12 @@
 #!/bin/bash -x
 
-USERNAME=$1
-APP_CONFIG_ENV=prod
+APP_CONFIG_ENV=$1
+USERNAME=$2
 if [ "$USERNAME" = "" ]; then
   USERNAME=$USER;
+fi;
+if [ "$APP_CONFIG_ENV" = "" ]; then
+  APP_CONFIG_ENV=prod;
 fi;
 
 APP_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-devoxx-fr.git
