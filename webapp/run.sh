@@ -31,5 +31,9 @@ sed -i "s/elasticsearch.host=.*/elasticsearch.host=\"http:\\/\\/$ES_PORT_9200_TC
 sed -i "s/elasticsearch.host=.*/elasticsearch.host=\"http:\\/\\/$ES_PORT_9200_TCP_ADDR:$ES_PORT_9200_TCP_PORT\"/g" target/universal/stage/conf/application.conf
 sed -i "s/elasticsearch.host=.*/elasticsearch.host=\"http:\\/\\/$ES_PORT_9200_TCP_ADDR:$ES_PORT_9200_TCP_PORT\"/g" target/scala-2.10/classes/application.conf
 
-
+if [ -f /cfp-src/target/universal/stage/RUNNING_PID ]
+then
+  kill -9 $(cat /cfp-src/target/universal/stage/RUNNING_PID)
+  rm /cfp-src/target/universal/stage/RUNNING_PID
+fi
 /cfp-src/target/universal/stage/bin/cfp-devoxxfr
