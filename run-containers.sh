@@ -9,7 +9,7 @@ if [ "$APP_CONFIG_ENV" = "" ]; then
   APP_CONFIG_ENV=prod;
 fi;
 
-APP_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-devoxx-fr.git
+APP_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-bdxio-fr.git
 APP_CONFIG_REPO_BRANCH=configurations
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
