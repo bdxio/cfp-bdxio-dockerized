@@ -1,9 +1,22 @@
 #!/bin/bash -x
 
-USERNAME=$1
+REDIS_CONFIG_ENV=$1
+USERNAME=$2
 if [ "$USERNAME" = "" ]; then
   USERNAME=$USER;
 fi;
+if [ "$REDIS_CONFIG_ENV" = "" ]; then
+  REDIS_CONFIG_ENV=prod;
+fi;
+
+REDIS_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-devoxx-fr.git
+REDIS_CONFIG_REPO_BRANCH=configurations
+
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+function extractRedisConfig(){
+  git archive --remote=$REDIS_CONFIG_REPO $REDIS_CONFIG_REPO_BRANCH redis-config-$1.conf | tar -x; mv redis-config-$1.conf $CURRENT_DIR/redis/redis-cfp.conf
+}
 
 function dockerBuildAndPrepareRun() {
   img_name=$1
@@ -18,6 +31,8 @@ function dockerBuildAndPrepareRun() {
 }
 
 dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
+
+extractRedisConfig $REDIS_CONFIG_ENV
 dockerBuildAndPrepareRun cfp-redis cfp-rds redis/
 
 git submodule init
