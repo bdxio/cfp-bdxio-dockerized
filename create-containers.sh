@@ -9,7 +9,7 @@ if [ "$REDIS_CONFIG_ENV" = "" ]; then
   REDIS_CONFIG_ENV=prod;
 fi;
 
-REDIS_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-devoxx-fr.git
+REDIS_CONFIG_REPO=git@bitbucket.org:bdxio/cfp-bdxio-fr.git
 REDIS_CONFIG_REPO_BRANCH=configurations
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
