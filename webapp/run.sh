@@ -6,7 +6,7 @@
 
 # Generating play2 executable for current cfp src
 cd /cfp-src/
-play stage
+play clean stage
 
 # Replacing es/redis infos in cfp.jar's application.conf
 mkdir /tmp/jar
