@@ -36,4 +36,5 @@ then
   kill -9 $(cat /cfp-src/target/universal/stage/RUNNING_PID)
   rm /cfp-src/target/universal/stage/RUNNING_PID
 fi
-/cfp-src/target/universal/stage/bin/cfp-devoxxfr
+/cfp-src/target/universal/stage/bin/cfp-bdx-io
+
