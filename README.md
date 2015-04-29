@@ -9,9 +9,13 @@ for hosting cfp application.
 
 Prior to anything, you will have several thing to do in order to make it work :
 
+* Bootstrap git submodule by executing the `bootstrap.sh` script
+
 * You will need to create an `application-<env>.conf` file somewhere, in a git repository (based on the `cfp-devoxx-fr/conf/appliation-please-customize-me.conf` file)
   For instance, I created a dedicated branch on the `cfp-devoxx-fr` repository with cfp configuration files. See [configurations branch](https://bitbucket.org/bdxio/cfp-devoxx-fr/src/HEAD/?at=configurations). 
   You can follow this principle, or extract your configuration files in a dedicated repository.
+  Note that you have an utility bash function declared in `cfp-src/source.sh` allowing to provision a given `application.conf` given an environment :
+  `extractApplicationConfig prod`
 
 * You will have to do the same as above for a `redis-config-<env>.conf` (based on the `cfp-devoxxfr-dockerized/redis/redis-config.conf` file)
 
