@@ -15,7 +15,7 @@ APP_CONFIG_REPO_BRANCH=configurations
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 function extractApplicationConfig(){
-  git archive --remote=$APP_CONFIG_REPO $APP_CONFIG_REPO_BRANCH application-$1.conf | tar -x; mv application-$1.conf $CURRENT_DIR/cfp-src/conf/application.conf
+  git archive --remote=$APP_CONFIG_REPO $APP_CONFIG_REPO_BRANCH application-$1.conf | tar -x; mv application-$1.conf $CURRENT_DIR/cfp-src-prod/conf/application.conf
 }
 
 docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
@@ -26,4 +26,4 @@ esContainerName=$(docker --debug run -d -p 49200:9200 -p 49300:9300 $USERNAME/cf
 redisProdContainerName=$(docker --debug run -d -p 6363:6379 -v $CURRENT_DIR/backups/prod:/data -v $CURRENT_DIR/logs:/var/log/redis -v $CURRENT_DIR/redis/redis-config-prod.conf:/etc/redis.conf redis:2.8 redis-server /etc/redis.conf)
 
 extractApplicationConfig $APP_CONFIG_ENV
-docker run -d --link $esContainerName:es --link $redisProdContainerName:redis -e "VIRTUAL_HOST=cfp.bdx.io" -v $CURRENT_DIR/cfp-src:/cfp-src/ $USERNAME/cfp-webapp
+docker run -d --link $esContainerName:es --link $redisProdContainerName:redis -e "VIRTUAL_HOST=cfp.bdx.io" -v $CURRENT_DIR/cfp-src-prod:/cfp-src/ $USERNAME/cfp-webapp

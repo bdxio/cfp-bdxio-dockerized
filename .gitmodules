@@ -1,3 +1,3 @@
 [submodule "cfp-src"]
-	path = cfp-src
+	path = cfp-src-prod
 	url = git@gitlab.com:bdxio/cfp-bdx-io.git
