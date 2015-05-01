@@ -25,7 +25,5 @@ docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-pr
 esContainerName=$(docker --debug run -d -p 49200:9200 -p 49300:9300 $USERNAME/cfp-elasticsearch)
 redisProdContainerName=$(docker --debug run -d -p 6363:6379 -v $CURRENT_DIR/backups/prod:/data -v $CURRENT_DIR/logs:/var/log/redis -v $CURRENT_DIR/redis/redis-config-prod.conf:/etc/redis.conf redis:2.8 redis-server /etc/redis.conf)
 
-git submodule update
 extractApplicationConfig $APP_CONFIG_ENV
 docker run -d --link $esContainerName:es --link $redisProdContainerName:redis -e "VIRTUAL_HOST=cfp.bdx.io" -v $CURRENT_DIR/cfp-src:/cfp-src/ $USERNAME/cfp-webapp
-#docker run -ti --link $esContainerName:es --link $redisContainerName:redis -p 80:9000 -v $CURRENT_DIR/cfp-src:/cfp-src/ $USERNAME/cfp-webapp /bin/bash
