@@ -1,3 +1,4 @@
 backups/
+logs/
 
 redis/redis-config-*.conf
