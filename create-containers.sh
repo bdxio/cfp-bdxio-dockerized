@@ -1,12 +1,8 @@
 #!/bin/bash -x
 
-REDIS_CONFIG_ENV=$1
-USERNAME=$2
+USERNAME=$1
 if [ "$USERNAME" = "" ]; then
   USERNAME=$USER;
-fi;
-if [ "$REDIS_CONFIG_ENV" = "" ]; then
-  REDIS_CONFIG_ENV=prod;
 fi;
 
 function dockerBuildAndPrepareRun() {
@@ -22,7 +18,4 @@ function dockerBuildAndPrepareRun() {
 }
 
 dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
-
-git submodule init
-git submodule update
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
