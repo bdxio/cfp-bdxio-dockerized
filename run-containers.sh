@@ -19,7 +19,7 @@ function extractApplicationConfig(){
 }
 
 docker --debug run -d -p 49200:9200 -p 49300:9300 $USERNAME/cfp-elasticsearch
-docker --debug run -d -p 49363:6363 -v $CURRENT_DIR/backups:/usr/local/var/db/redis/ $USERNAME/cfp-redis
+docker --debug run -d -p 6363:6379 -v $CURRENT_DIR/backups/prod:/data -v $CURRENT_DIR/logs:/var/log/redis -v $CURRENT_DIR/redis/redis-config-prod.conf:/etc/redis.conf redis:2.8 redis-server /etc/redis.conf
 
 # Note using the -name option on previous docker commands because a "named" container is harder to remove
 # than a randomly-named container (and we cannot reuse an already-used name)

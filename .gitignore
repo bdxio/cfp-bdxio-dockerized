@@ -1,2 +1,3 @@
 backups/
 
+redis/redis-config-*.conf
