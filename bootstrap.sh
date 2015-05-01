@@ -15,6 +15,7 @@ mkdir --parent $CURRENT_DIR/backups/prod/
 mkdir --parent $CURRENT_DIR/backups/testing/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
+mkdir redis
 
 chmod 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/
 
