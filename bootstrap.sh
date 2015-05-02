@@ -14,9 +14,11 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir $CURRENT_DIR/dropbox/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/
 mkdir redis
 
-chmod 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/
+chmod -R 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/ $CURRENT_DIR/dropbox/
 
 git archive --remote=$REDIS_CONFIG_REPO $REDIS_CONFIG_REPO_BRANCH redis-config-*.conf | tar -x; mv redis-config-*.conf $CURRENT_DIR/redis/
 
@@ -29,6 +31,3 @@ extractApplicationConfig testing
 
 ./create-containers.sh
 
-# Creating cfp-backups dir *after* we initialized dropbox container (this is important in order to have these dirs taken into account)
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/
