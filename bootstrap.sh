@@ -11,8 +11,7 @@ REDIS_CONFIG_REPO_BRANCH=configurations
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/
+mkdir $CURRENT_DIR/dropbox/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
 mkdir redis
@@ -29,3 +28,7 @@ extractApplicationConfig prod
 extractApplicationConfig testing
 
 ./create-containers.sh
+
+# Creating cfp-backups dir *after* we initialized dropbox container (this is important in order to have these dirs taken into account)
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/
