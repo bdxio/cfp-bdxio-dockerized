@@ -18,4 +18,4 @@ redisTestingContainerName=$(docker --debug run -d -p 6364:6379 -v $CURRENT_DIR/d
 docker run -d --link $esContainerName:es --link $redisProdContainerName:redis -e "VIRTUAL_HOST=cfp.bdx.io" -v $CURRENT_DIR/cfp-src-prod:/cfp-src/ $USERNAME/cfp-webapp
 docker run -d --link $esContainerName:es --link $redisTestingContainerName:redis -e "VIRTUAL_HOST=cfp-testing.bdx.io" -v $CURRENT_DIR/cfp-src-testing:/cfp-src/ $USERNAME/cfp-webapp
 
-docker run -dv /home/admin/cfp-bdxio-dockerized/dropbox:/Dropbox my-dropbox /.dropbox-dist/dropboxd
+docker run -dv $CURRENT_DIR/dropbox:/Dropbox my-dropbox /.dropbox-dist/dropboxd
