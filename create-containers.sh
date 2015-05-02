@@ -5,6 +5,8 @@ if [ "$USERNAME" = "" ]; then
   USERNAME=$USER;
 fi;
 
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 function dockerBuildAndPrepareRun() {
   img_name=$1
   img_alias=$2
@@ -19,3 +21,8 @@ function dockerBuildAndPrepareRun() {
 
 dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
+
+echo Intiializing dropbox credentials..
+echo Once you will have associated the docker container with your dropbox account, please open another shell and execute :
+echo   docker commit `docker ps -l -q` my-dropbox && docker kill `docker ps -l -q`
+docker run -itv $CURRENT_DIR/dropbox:/Dropbox ctlc/dropbox /.dropbox-dist/dropboxd

@@ -16,6 +16,8 @@ mkdir --parent $CURRENT_DIR/backups/testing/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
 mkdir redis
+mkdir dropbox
+ln -s ./backups ./dropbox/cfp-backups
 
 chmod 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/
 
