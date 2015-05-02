@@ -22,11 +22,3 @@ function dockerBuildAndPrepareRun() {
 dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
 
-echo Intializing dropbox credentials..
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-echo Once you will have associated the docker container with your dropbox account, please open another shell and execute :
-echo '  docker commit `docker ps -l -q` my-dropbox && docker kill `docker ps -l -q`'
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-docker run -itv $CURRENT_DIR/dropbox:/Dropbox ctlc/dropbox /.dropbox-dist/dropboxd
