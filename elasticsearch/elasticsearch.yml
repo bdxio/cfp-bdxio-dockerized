@@ -1,3 +1,0 @@
-path:
-  logs: /var/log/elasticsearch/
-  data: /usr/local/var/db/elasticsearch/data

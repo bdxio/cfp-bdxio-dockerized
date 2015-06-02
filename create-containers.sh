@@ -19,6 +19,5 @@ function dockerBuildAndPrepareRun() {
   docker build -t $USERNAME/$img_name $img_dir
 }
 
-dockerBuildAndPrepareRun cfp-elasticsearch cfp-es elasticsearch/
 dockerBuildAndPrepareRun cfp-webapp cfp-web webapp/
 

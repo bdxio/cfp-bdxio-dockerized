@@ -14,8 +14,10 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 mkdir $CURRENT_DIR/dropbox/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/
-mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/redis/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/es/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/redis/
+mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/es/
 mkdir redis
 
 chmod -R 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/ $CURRENT_DIR/dropbox/
