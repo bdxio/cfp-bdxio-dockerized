@@ -1,5 +1,10 @@
 #!/bin/bash -x
 
+# Re-run docker images for cfp
+# It may take some time as new image instances are re-created here
+# This script will be useful if, for some reason, you rebooted es/redis image and thus need a re-linking
+# with new image instances
+
 USERNAME=$1
 if [ "$USERNAME" = "" ]; then
   USERNAME=$USER;

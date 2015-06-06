@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Fastest webapp image update :
+# - Pull git sources for cfp webapp sources
+# - Restart docker images, not re-running them (thus, most of play2 libs are already provisionned, only source code changed)
+
 git pull
 git submodule update
 
