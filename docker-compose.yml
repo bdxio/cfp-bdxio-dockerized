@@ -43,6 +43,7 @@ cfp-prod:
    - LETSENCRYPT_EMAIL=team@bdx.io
   volumes:
    - ./cfp-src-prod:/cfp-src/
+   - ./http-le-challenge:/ext-assets
 
 cfp-testing:
   build: ./webapp
@@ -56,6 +57,7 @@ cfp-testing:
    - LETSENCRYPT_HOST=cfp-testing.bdx.io
    - LETSENCRYPT_EMAIL=team@bdx.io
   volumes:
+   - ./http-le-challenge:/ext-assets
    - ./cfp-src-testing:/cfp-src/
 
 http:
@@ -65,7 +67,7 @@ http:
   volumes:
    - ./certs:/etc/nginx/certs:ro
    - /etc/nginx/vhost.d
-   - /usr/share/nginx/html
+   - ./http-le-challenge:/usr/share/nginx/html
    - /var/run/docker.sock:/tmp/docker.sock:ro
 
 http-letsencrypt-companion:

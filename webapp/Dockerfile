@@ -1,6 +1,6 @@
 # DOCKER-VERSION 0.10.0
 FROM        ubuntu:14.04
-VOLUME      ["/cfp-src"]
+VOLUME      ["/cfp-src", "/ext-assets"]
 
 # Pre-requisites
 RUN         apt-get update -y
