@@ -1,0 +1,69 @@
+es-prod:
+  image: elasticsearch
+  ports:
+   - 49300:9300
+   - 49200:9200
+
+es-testing:
+  image: elasticsearch
+  ports:
+   - 59300:9300
+   - 59200:9200
+
+redis-prod:
+  image: redis:2.8
+  ports:
+   - 6363:6379
+  volumes:
+   - ./dropbox/cfp-backups/prod/redis:/data/
+   - ./logs/prod:/var/log/redis/
+   - ./redis/redis-config-prod.conf:/etc/redis.conf
+  command: redis-server /etc/redis.conf
+
+redis-testing:
+  image: redis:2.8
+  ports:
+   - 6364:6379
+  volumes:
+   - ./dropbox/cfp-backups/testing/redis:/data/
+   - ./logs/testing:/var/log/redis/
+   - ./redis/redis-config-testing.conf:/etc/redis.conf
+  command: redis-server /etc/redis.conf
+
+cfp-prod:
+  build: ./webapp
+  ports:
+   - 8100:9000
+  links:
+   - es-prod:es
+   - redis-prod:redis
+  environment:
+   - VIRTUAL_HOST=cfp.bdx.io
+  volumes:
+   - ./cfp-src-prod:/cfp-src/
+
+cfp-testing:
+  build: ./webapp
+  ports:
+   - 8000:9000
+  links:
+   - es-testing:es
+   - redis-testing:redis
+  environment:
+   - VIRTUAL_HOST=cfp-testing.bdx.io
+  volumes:
+   - ./cfp-src-testing:/cfp-src/
+
+http:
+  image: jwilder/nginx-proxy
+  ports:
+   - "80:80"
+  volumes:
+   - /var/run/docker.sock:/tmp/docker.sock
+
+dropbox:
+  image: gfjardim/dropbox
+  privileged: true
+  volumes:
+   - ./dropbox:/home/Dropbox
+   - /etc/localtime:/etc/localtime:ro
