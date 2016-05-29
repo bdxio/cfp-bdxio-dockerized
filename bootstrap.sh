@@ -33,5 +33,3 @@ function extractApplicationConfig(){
 extractApplicationConfig prod
 extractApplicationConfig testing
 
-./create-containers.sh
-
