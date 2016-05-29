@@ -2,5 +2,6 @@ backups/
 logs/
 redis/
 dropbox/
+certs/
 
 redis/redis-config-*.conf

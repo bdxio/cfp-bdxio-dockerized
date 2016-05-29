@@ -12,6 +12,7 @@ REDIS_CONFIG_REPO_BRANCH=configurations
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 mkdir $CURRENT_DIR/dropbox/
+mkdir $CURRENT_DIR/certs/
 mkdir --parent $CURRENT_DIR/logs/prod/
 mkdir --parent $CURRENT_DIR/logs/testing/
 mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/prod/redis/
