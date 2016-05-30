@@ -6,7 +6,18 @@
 
 # Generating play2 executable for current cfp src
 cd /cfp-src/
-play clean stage
+
+# Allowing to skip play clean by putting a /cfp-src/skip-clean file
+# (this will speed up instance startup but may keep some old compiled files)
+if [ -e /cfp-src/skip-clean ];
+then
+  echo "Cleaning play classes has been skipped !"
+else
+  echo "Cleaning play classes..."
+  play clean;
+fi
+echo "Generating artefact..."
+play stage
 
 # Redis infos
 redisHost=$(echo $REDIS_PORT | cut -d: -f2 | cut -d/ -f3)
