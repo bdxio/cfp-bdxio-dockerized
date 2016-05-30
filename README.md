@@ -9,7 +9,7 @@ for hosting cfp application.
 
 Prior to anything, you will have several thing to do in order to make it work :
 
-* Bootstrap git submodule by executing the `bootstrap.sh` script
+* Bootstrap directories & git submodule by executing the `bootstrap.sh` script
 
 * You will need to create an `application-<env>.conf` file somewhere, in a git repository (based on the `cfp-devoxx-fr/conf/appliation-please-customize-me.conf` file)
   For instance, I created a dedicated branch on the `cfp-devoxx-fr` repository with cfp configuration files. See [configurations branch](https://gitlab.com/bdxio/cfp-bdx-io/tree/configurations). 
@@ -19,15 +19,15 @@ Prior to anything, you will have several thing to do in order to make it work :
 
 * You will have to do the same as above for a `redis-config-<env>.conf` (based on the `cfp-devoxxfr-dockerized/redis/redis-config.conf` file)
 
-* Then edit the `run-containers.sh` file and edit the `APP_CONFIG_REPO` variable with your repo
-  Do ths same with the `create-containers.sh` file and the `REDIS_CONFIG_REPO` variable
+* Run `docker-compose up -d` in order to build & run every declared services into docker-compose.yml file
+  Run `docker logs -f $(docker ps -f name=cfp-prod | cut -d' ' -f1)`©and wait for the cfp play2 webapp to completely be started.
+  For this, you need to see something like `play: Application started`
+  Once done, restart the `letsencrypt-nginx-proxy-companion` in order to generate let's encrypt certificates : `docker restart $(docker ps -f name=letsencrypt-nginx-proxy-companion | cut -d' ' 
+-f1)` and look at its log to be sure both testing & prod certificates are generated correctly.
 
-
-Once done, you will need to :
-
-* Run the `create-containers.sh` bash script once to create the 3 needed docker images (elastic search, redis and the webapp)
-
-* Once done, run the `run-containers.sh <env>` to start previously created docker images, passing <env> as a parameter (the env will be used to retrieve the good `application.conf` file as described above)
+* Once done, you will need to manually link dropbox docker instance container with your own dropbox account
+  For this, you will need to retrieve dropbox token url generated inside the dropbox docker instance : `docker logs -f cfpbdxiodockerized_dropbox_1`
+  And then, connect to your dropbox account in a browser and copy/paste the logs' token url into it in order to initiate dropbox sync of the backup folder
 
 
 Side note : if you forked the `cfp-devoxx-fr` repository, don't hesitate to change cfp-src-*/ git submodules in order to target your own repository.
@@ -37,3 +37,23 @@ git submodule deinit cfp-src-prod
 git rm cfp-src-prod
 git submodule add cfp-src-prod <your git repository>
 ```
+
+## Things to do when initializing a new Year  ##
+
+To bootstrap a new year, you will have to change following things :
+- Checkout `configurations` branch from this repository, and update `application-prod.conf`'s `mail.comittee.email` entry accordingly to a new google group for this year's event
+  Then create a new google group dedicated to CFP voters (generally named cfp-bdxio-XXXX@googlegroups.com where XXXX is the target year).
+  Configuration worth noting when creating this google group is to :
+-- Group type : Mailing list
+-- Displaying topics : group's members only
+-- Publishing : Public (it is required in order to allow to send email to the google group folks)
+-- Join the group : Invitation only
+-- After creation, in Informations -> Directory, uncheck the "Declare this group in the directory" checkbox
+-- After creation, in Parameters -> Email options, put an "Email object prefix" to something like "[CFP - bdx.io - 2016]"
+- Update `ConferenceDescriptor.scala` on branch `dev` file with :
+-- New dates
+-- Potentially new rooms
+-- Potentially new tracks
+  You can have a look at [this commit](https://gitlab.com/bdxio/cfp-bdx-io/commit/86f899ef04d7451fb9fff3d4b4e25c29a90846ee) to see how to change this properly
+- Once previous step is done, checkout `testing` branch and merge `dev` branch on it in order to include these changes into it
+- Execute the "Set Up" steps prior to the `docker-compose up -d` step
