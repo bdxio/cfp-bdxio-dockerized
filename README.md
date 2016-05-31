@@ -57,3 +57,8 @@ To bootstrap a new year, you will have to change following things :
   You can have a look at [this commit](https://gitlab.com/bdxio/cfp-bdx-io/commit/86f899ef04d7451fb9fff3d4b4e25c29a90846ee) to see how to change this properly
 - Once previous step is done, checkout `testing` branch and merge `dev` branch on it in order to include these changes into it
 - Execute the "Set Up" steps prior to the `docker-compose up -d` step
+- Once the CFP is running, you will need to create admin accounts
+  To do so, you will first need to create a standard accound, then call the `GET http://<cfp-url>/admin/bootstrapAdminUser` which will check there isn't any administrator yet, and will
+  then promote current user to the admins groups.
+  To add more administrators, you will need to retrieve user id you want to promote (go to user details screen through Backoffice for instance), and then call
+  `GET http://<cfp-url>/admin/promoteToAdminUser?uuid=<uuid>` as a user administrator.
