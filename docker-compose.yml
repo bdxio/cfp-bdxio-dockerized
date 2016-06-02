@@ -78,10 +78,3 @@ http-letsencrypt-companion:
    - /var/run/docker.sock:/var/run/docker.sock:ro
   volumes_from:
    - http
-
-dropbox:
-  image: gfjardim/dropbox
-  privileged: true
-  volumes:
-   - ./dropbox:/home/Dropbox
-   - /etc/localtime:/etc/localtime:ro
