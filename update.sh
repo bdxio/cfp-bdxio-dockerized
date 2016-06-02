@@ -7,5 +7,5 @@
 git pull
 git submodule update
 
-docker restart $(docker ps -f name=cfp-prod | cut -d" " -f1)
-docker restart $(docker ps -f name=cfp-testing | cut -d" " -f1)
+docker restart $(docker ps -f name=cfp-prod | tail -n 1 | cut -d" " -f1)
+docker restart $(docker ps -f name=cfp-testing | tail -n 1 | cut -d" " -f1)
