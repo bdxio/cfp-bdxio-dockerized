@@ -22,6 +22,7 @@ mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/redis/
 mkdir --parent $CURRENT_DIR/dropbox/cfp-backups/testing/es/
 mkdir redis
 
+# This stuff is VERY important otherwise REDIS won't start at all
 chmod -R 777 $CURRENT_DIR/logs/prod/ $CURRENT_DIR/logs/testing/ $CURRENT_DIR/dropbox/
 
 git archive --remote=$REDIS_CONFIG_REPO $REDIS_CONFIG_REPO_BRANCH redis-config-*.conf | tar -x; mv redis-config-*.conf $CURRENT_DIR/redis/
