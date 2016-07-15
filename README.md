@@ -62,3 +62,8 @@ To bootstrap a new year, you will have to change following things :
   then promote current user to the admins groups.
   To add more administrators, you will need to retrieve user id you want to promote (go to user details screen through Backoffice for instance), and then call
   `GET http://<cfp-url>/admin/promoteToAdminUser?uuid=<uuid>` as a user administrator.
+
+
+## Things to follow when restoring a redis backup ##
+
+Follow these instructions, it's working : http://stackoverflow.com/a/23233940/476345
