@@ -78,3 +78,5 @@ http-letsencrypt-companion:
    - /var/run/docker.sock:/var/run/docker.sock:ro
   volumes_from:
    - http
+  environment:
+   - DEBUG=true
