@@ -1,82 +1,88 @@
-es-prod:
-  image: elasticsearch
-  ports:
-   - 49300:9300
-   - 49200:9200
+version: '2'
 
-es-testing:
-  image: elasticsearch
-  ports:
-   - 59300:9300
-   - 59200:9200
+services:
+  traefik:
+    image: traefik:1.6.4
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - web
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/traefik.toml:/traefik.toml
+      - $PWD/acme.json:/acme.json
 
-redis-prod:
-  image: redis:2.8
-  ports:
-   - 6363:6379
-  volumes:
-   - ./dropbox/cfp-backups/prod/redis:/data/
-   - ./logs/prod:/var/log/redis/
-   - ./redis/redis-config-prod.conf:/etc/redis.conf
-  command: redis-server /etc/redis.conf
+  es-prod:
+    image: elasticsearch
+    restart: always
+    expose:
+      - "9300"
+      - "9200"
 
-redis-testing:
-  image: redis:2.8
-  ports:
-   - 6364:6379
-  volumes:
-   - ./dropbox/cfp-backups/testing/redis:/data/
-   - ./logs/testing:/var/log/redis/
-   - ./redis/redis-config-testing.conf:/etc/redis.conf
-  command: redis-server /etc/redis.conf
+  es-testing:
+    image: elasticsearch
+    restart: always
+    expose:
+      - "9300"
+      - "9200"
 
-cfp-prod:
-  build: ./webapp
-  ports:
-   - 8100:9000
-  links:
-   - es-prod:es
-   - redis-prod:redis
-  environment:
-   - VIRTUAL_HOST=cfp.bdx.io
-   - LETSENCRYPT_HOST=cfp.bdx.io
-   - LETSENCRYPT_EMAIL=team@bdx.io
-  volumes:
-   - ./cfp-src-prod:/cfp-src/
-   - ./http-le-challenge:/ext-assets
+  redis-prod:
+    image: redis:2.8
+    restart: always
+    expose:
+      - "6379"
+    volumes:
+      - $PWD/dropbox/cfp-backups/prod/redis:/data/
+      - $PWD/logs/prod:/var/log/redis/
+      - $PWD/redis/redis-config-prod.conf:/etc/redis.conf
+    command: redis-server /etc/redis.conf
 
-cfp-testing:
-  build: ./webapp
-  ports:
-   - 8000:9000
-  links:
-   - es-testing:es
-   - redis-testing:redis
-  environment:
-   - VIRTUAL_HOST=cfp-testing.bdx.io
-   - LETSENCRYPT_HOST=cfp-testing.bdx.io
-   - LETSENCRYPT_EMAIL=team@bdx.io
-  volumes:
-   - ./http-le-challenge:/ext-assets
-   - ./cfp-src-testing:/cfp-src/
+  redis-testing:
+    image: redis:2.8
+    restart: always
+    expose:
+      - "6379"
+    volumes:
+      - $PWD/dropbox/cfp-backups/testing/redis:/data/
+      - $PWD/logs/testing:/var/log/redis/
+      - $PWD/redis/redis-config-testing.conf:/etc/redis.conf
+    command: redis-server /etc/redis.conf
 
-http:
-  image: jwilder/nginx-proxy:0.1.0
-  ports:
-   - "80:80"
-   - "443:443"
-  volumes:
-   - ./certs:/etc/nginx/certs:ro
-   - /etc/nginx/vhost.d
-   - ./http-le-challenge:/usr/share/nginx/html
-   - /var/run/docker.sock:/tmp/docker.sock:ro
+  cfp-prod:
+    build: ./webapp
+    restart: always
+    networks:
+      - web
+      - default
+    expose:
+      - "9000"
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:cfp.bdx.io"
+      - "traefik.basic.port=9000"
+      - "traefik.basic.protocol=http"
+    volumes:
+      - $PWD/cfp-src-prod:/app
 
-http-letsencrypt-companion:
-  image: jrcs/letsencrypt-nginx-proxy-companion
-  volumes:
-   - ./certs:/etc/nginx/certs:rw
-   - /var/run/docker.sock:/var/run/docker.sock:ro
-  volumes_from:
-   - http
-  environment:
-   - DEBUG=true
+  cfp-testing:
+    build: ./webapp
+    restart: always
+    networks:
+      - web
+      - default
+    expose:
+      - "9000"
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:cfp-testing.bdx.io"
+      - "traefik.basic.port=9000"
+      - "traefik.basic.protocol=http"
+    volumes:
+      - $PWD/cfp-src-testing:/app
+
+networks:
+  web:

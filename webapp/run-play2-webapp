@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Change to application directory
+cd /app
+
+# Prepare the application to run (see https://www.playframework.com/documentation/2.2.x/Production#Using-the-stage-task)
+play clean stage
+
+# Run the application
+./target/universal/stage/bin/cfp-bdx-io

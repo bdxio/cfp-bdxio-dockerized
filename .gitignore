@@ -6,3 +6,4 @@ certs/
 http-le-challenge/
 
 redis/redis-config-*.conf
+acme.json

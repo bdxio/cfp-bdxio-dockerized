@@ -1,0 +1,32 @@
+debug = false
+
+checkNewVersion = false
+
+logLevel = "ERROR"
+
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "bdx.io"
+watch = true
+exposedByDefault = false
+
+[acme]
+email = "teame@bdx.io"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+[acme.httpChallenge]
+entryPoint = "http"
