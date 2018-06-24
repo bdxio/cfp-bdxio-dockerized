@@ -61,7 +61,7 @@ cfp-testing:
    - ./cfp-src-testing:/cfp-src/
 
 http:
-  image: jwilder/nginx-proxy:0.1.0
+  image: jwilder/nginx-proxy:0.6.0
   ports:
    - "80:80"
    - "443:443"
@@ -70,6 +70,8 @@ http:
    - /etc/nginx/vhost.d
    - ./http-le-challenge:/usr/share/nginx/html
    - /var/run/docker.sock:/tmp/docker.sock:ro
+  labels:
+   - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
 
 http-letsencrypt-companion:
   image: jrcs/letsencrypt-nginx-proxy-companion
